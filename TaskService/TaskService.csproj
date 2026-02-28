@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;net48;net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows;netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows</TargetFrameworks>
+    <Platforms>x64</Platforms>
     <AssemblyName>Microsoft.Win32.TaskScheduler</AssemblyName>
     <RootNamespace>Microsoft.Win32.TaskScheduler</RootNamespace>
     <PackageId>TaskScheduler</PackageId>
@@ -8,6 +9,7 @@
     <Description>Provides a single assembly wrapper for the 1.0 and 2.0 versions of Task Scheduler found in all Microsoft operating systems post Windows 98. It simplifies the coding, aggregates the multiple versions and allows for localization support.</Description>
     <PackageTags>task;interop;windows;taskscheduler;scheduler;.net;task scheduler</PackageTags>
     <PackageReadmeFile>TaskService.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <None Include="TaskService.md" Pack="true" PackagePath="\" />
@@ -18,45 +20,12 @@
   <ItemGroup>
     <EmbeddedResource Include="TaskService.bmp" />
   </ItemGroup>
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('net2')) Or $(TargetFramework.StartsWith('net3')) Or $(TargetFramework.StartsWith('net4')) ">
-    <Reference Include="System.Drawing" />
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.IO.Compression" />
-  </ItemGroup>
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-    <PackageReference Include="System.Reflection" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
-    <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
-  </ItemGroup>
-  <ItemGroup Condition=" !$(TargetFramework.StartsWith('net4')) " >
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="System.Security.AccessControl" Version="6.0.1" />
-  </ItemGroup>
-  <!-- Add EventLog reference based on OS for all versions other than .NET 4.x -->
   <Choose>
-    <When Condition=" $(TargetFramework.StartsWith('net9')) ">
+    <When Condition=" $(TargetFramework.StartsWith('net10')) ">
       <ItemGroup>
-        <PackageReference Include="System.Diagnostics.EventLog" Version="9.0.2" />
-      </ItemGroup>
-    </When>
-    <When Condition=" $(TargetFramework.StartsWith('net8')) ">
-      <ItemGroup>
-        <PackageReference Include="System.Diagnostics.EventLog" Version="8.0.1" />
-      </ItemGroup>
-    </When>
-    <When Condition=" $(TargetFramework.StartsWith('net7')) ">
-      <ItemGroup>
-        <PackageReference Include="System.Diagnostics.EventLog" Version="7.0.0" />
-      </ItemGroup>
-    </When>
-    <When Condition=" !$(TargetFramework.StartsWith('net4')) " >
-      <ItemGroup>
-        <PackageReference Include="System.Diagnostics.EventLog" Version="6.0.0" />
+        <PackageReference Include="System.Diagnostics.EventLog" Version="10.0.0" />
+        <PackageReference Include="System.Management" Version="10.0.0" />
+        <PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.0" />
       </ItemGroup>
     </When>
   </Choose>
